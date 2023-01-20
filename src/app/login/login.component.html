@@ -1,0 +1,56 @@
+<div class="login-wrapper">
+    <form [formGroup]="loginForm" (ngSubmit)="save($event)" class="login">
+      <label class="title">
+        <h3 class="welcome">Bievenido a</h3>
+        LiveStock
+        <h5 class="hint">Rustic Farm</h5>
+      </label>
+  
+      <div class="login-group">
+        <label for="login_username">Correo electrónico:</label>
+        <input
+          formControlName="emailCtrol"
+          class="username"
+          name="email"
+          type="text"
+          id="login_username"
+          placeholder="ejemplo@dominio.com"
+        />
+  
+        <div *ngIf="emailCtrol?.errors && emailCtrol?.touched">
+          <p *ngIf="emailCtrol?.hasError('required')">Es un campo requerido.</p>
+          <p *ngIf="emailCtrol?.hasError('email')">
+            No es un correo electrónico.
+          </p>
+        </div>
+  
+        <label for="login_username">Contraseña:</label>
+        <input
+          formControlName="passCtrol"
+          class="password"
+          name="password"
+          type="password"
+          id="login_password"
+          placeholder="*********"
+        />
+  
+        <div *ngIf="passCtrol?.errors && passCtrol?.touched">
+          <p *ngIf="passCtrol?.hasError('required')">Es un campo requerido.</p>
+        </div>
+  
+        <button type="submit" class="mt-4 btn btn-primary btn-sm">
+          Ingresar
+        </button>
+  
+        <button
+          routerLink="/register"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          class="mt-2 btn btn-dark btn-sm"
+        >
+          Registrarse
+        </button>
+      </div>
+    </form>
+  </div>
+  

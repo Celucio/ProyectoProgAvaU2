@@ -1,0 +1,118 @@
+<app-template></app-template>
+
+<div id="form" class="container p-4 m-auto my-5 w-50 bg-light rounded-3 border">
+  <form [formGroup]="registerForm" class="row gy-2" (ngSubmit)="registrarPedido()">
+    <div>
+      <h3>
+        Compra de <span class="text-primary">Ganado</span>
+      </h3>
+    </div>
+    <div class="form-group col-12 col-md-6">
+      <label for="nombre">Nombres: </label>
+      <input autofocus formControlName="nombre" class="form-control" name="nombre" type="text" id="nombre"
+        placeholder="Ingrese su nombre" />
+      <div class="alert alert-danger p-2 my-2" *ngIf="nombreCtrol?.errors && nombreCtrol?.touched">
+        <p class="m-auto" *ngIf="nombreCtrol?.hasError('required')">Es un campo requerido.</p>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-6">
+      <label for="apellido">Apellidos: </label>
+      <input formControlName="apellido" class="form-control" name="apellido" type="text" id="apellido"
+        placeholder="Ingrese su apellido" />
+      <div class="alert alert-danger p-2 my-2" *ngIf="apellidoCtrol?.errors && apellidoCtrol?.touched">
+        <p class="m-auto" *ngIf="apellidoCtrol?.hasError('required')">Es un campo requerido.</p>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-6">
+      <label for="cedula">Cédula/Pasaporte:</label>
+      <input formControlName="cedula" class="form-control" name="cedula" type="number" id="cedula"
+        placeholder="Ingrese su DNI/Cédula" />
+      <div class="alert alert-danger p-2 my-2" *ngIf="cedulaCtrol?.errors && cedulaCtrol?.touched">
+        <p class="m-auto" *ngIf="cedulaCtrol?.hasError('required')">Es un campo requerido.</p>
+        <p class="m-auto" *ngIf="cedulaCtrol?.hasError('pattern')">No es una cédula ecuatoriana.</p>
+      </div>
+    </div>
+    <div class="form-group col-12 col-md-6">
+      <label for="email">Correo electrónico:</label>
+      <input formControlName="email" class="form-control" name="email" type="email" id="email"
+        placeholder="Ingrese su correo electrónico" />
+      <div class="alert alert-danger p-2 my-2" *ngIf="emailCtrol?.errors && emailCtrol?.touched">
+        <p class="m-auto" *ngIf="emailCtrol?.hasError('required')">Es un campo requerido.</p>
+        <p class="m-auto" *ngIf="emailCtrol?.hasError('email')">No es un correo electrónico.</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="comentario">Comentario (Opcional): </label>
+      <textarea formControlName="comentario" class="form-control" name="comentario" id="comentario" type="text"
+        placeholder="Ingrese la información extra" rows="2" id="comentario"></textarea>
+      <div class="alert alert-danger p-2 my-2" *ngIf="comentarioCtrol?.errors && comentarioCtrol?.touched">
+        <p class="m-auto" *ngIf="comentarioCtrol?.hasError('minlength')">Se requiere mínimo 30 caracteres.</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="sel1">Seleccione el lugar de residencia:</label>
+      <select formControlName="residencia" class="form-control" name="residencia" id="residencia"
+        placeholder="Ingrese su correo electrónico" id="residencia">
+        <option value="-1" selected>--Selecione una opción--</option>
+        <option *ngFor="let ciudad of ciudades" value='{{ciudad}}'>{{ciudad}}</option>
+      </select>
+      <div class="alert alert-danger p-2 my-2" *ngIf="residenciaCtrol?.errors && residenciaCtrol?.touched">
+        <p class="m-auto" *ngIf="residenciaCtrol?.hasError('required')">Es un campo requerido.</p>
+      </div>
+    </div>
+    <div class="py-4 text-center">
+      <button type="submit" [disabled]="this.registerForm.invalid" class="btn fs-4 fw-bold btn-outline-primary"
+        href="#editarvaca" data-toggle="modal">
+        Enviar
+      </button>
+    </div>
+
+    <div>
+      <div class="card text-center">
+        <div class="card-body row">
+          <div class="col-12 col-md-8 form-group">
+            <label for="productName" class="col-12 col-form-label">Ganado</label>
+            <select name="ganado" class="form-control" id="productName">
+              <option *ngFor="let animal of ganado" value='{{animal}}'>{{animal}}</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-4 form-group">
+            <label for="productCount" class="col-12 col-form-label">Cantidad</label>
+            <div class="col-12">
+              <input type="number" value="1" min="1" name="cantidad" class="form-control" id="cantidad">
+            </div>
+          </div>
+          <div class="col-12 col-md-12 py-4">
+            <a class="btn btn-primary float-right add-product">Añadir</a>
+          </div>
+        </div>
+      </div>
+      <ul class="list-group mt-5">
+      </ul>
+    </div>
+  </form>
+</div>
+
+<!-- Edit Modal HTML -->
+<div id="editarvaca" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h4 class="modal-title">Pedido generado</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body bg-light">
+          <p class="text-sucess">
+            Se te enviará a tu correo electrónico un link directo, una vez que
+            se haya validado su proceso, para que suba el comprobante del pago.
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
