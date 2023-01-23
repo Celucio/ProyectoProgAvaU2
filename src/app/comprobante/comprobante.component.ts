@@ -1,9 +1,8 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Persona } from 'src/environments/persona';
 import { FirebaseService } from '../services/firebase.service';
-
 import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2'
@@ -29,10 +28,8 @@ export class ComprobanteComponent implements OnInit {
 
   // trackBuscado = '59f24096d7a165f14b956253cd624be6';
   trackBuscado!: String;
-
   listaPersona!: [Persona];
   registerForm!: FormGroup; // No provee una inicialización
-
   comprobante!: String;
 
   constructor(private route: ActivatedRoute, private servicio: FirebaseService, private formBuilder: FormBuilder, private router: Router) {
@@ -104,15 +101,19 @@ export class ComprobanteComponent implements OnInit {
       if (result.isConfirmed) {
         this.servicio.enviarComprobante(id, this.comprobante).subscribe(res => {
           this.consultar();
+          Toast.fire({
+            icon: 'success',
+            title: 'El comprobante se ha enviado con éxito'
+          })
         },
           (err) => {
+            Toast.fire({
+              icon: 'error',
+              title: 'El archivo debe ser como máximo de 1MB'
+            })
             console.log(err);
           }
         );
-        Toast.fire({
-          icon: 'success',
-          title: 'El comprobante se ha enviado con éxito'
-        })
       } else (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel

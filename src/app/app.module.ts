@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FirebaseService } from './services/firebase.service';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     FormsModule,
     ROUTING,
     HttpClientModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]
