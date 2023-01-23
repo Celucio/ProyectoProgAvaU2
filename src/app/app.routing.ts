@@ -16,7 +16,7 @@ import { ConfirmacionComponent } from './confirmacion/confirmacion.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
-  // { path: 'home', component: HomeComponent },
+  { path: 'comprobante/:id', component: ComprobanteComponent },
   { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
   { path: 'landing', component: LandingComponent },

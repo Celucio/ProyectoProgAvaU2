@@ -3,6 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Persona } from 'src/environments/persona';
 import { FirebaseService } from '../services/firebase.service';
+
+import { ActivatedRoute } from '@angular/router';
+
 import Swal from 'sweetalert2'
 
 const Toast = Swal.mixin({
@@ -24,15 +27,18 @@ const Toast = Swal.mixin({
 })
 export class ComprobanteComponent implements OnInit {
 
-  trackBuscado = '59f24096d7a165f14b956253cd624be6';
+  // trackBuscado = '59f24096d7a165f14b956253cd624be6';
+  trackBuscado!: String;
 
   listaPersona!: [Persona];
   registerForm!: FormGroup; // No provee una inicialización
 
   comprobante!: String;
 
-  constructor(private servicio: FirebaseService, private formBuilder: FormBuilder, private router: Router) {
-    
+  constructor(private route: ActivatedRoute, private servicio: FirebaseService, private formBuilder: FormBuilder, private router: Router) {
+    this.route.params.subscribe(params => {
+      this.trackBuscado = params['id'];
+    });
   }
 
   private buildForm() {
