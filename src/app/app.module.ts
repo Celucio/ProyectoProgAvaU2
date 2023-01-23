@@ -21,6 +21,7 @@ import { TransaccionesComponent } from './transacciones/transacciones.component'
 import { ConfirmacionComponent } from './confirmacion/confirmacion.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FirebaseService } from './services/firebase.service';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { FirebaseService } from './services/firebase.service';
     ComprobanteComponent,
     TransaccionesComponent,
     ConfirmacionComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,

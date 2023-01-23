@@ -15,9 +15,7 @@ export class FirebaseService {
 
   constructor(private http: HttpClient) {}
 
-  registrarPersona(persona: any) {
-    console.log("firebase");
-    console.log(persona);
+  registrarPersona(persona: Persona) {
     return this.http.post('http://52.87.220.184:8080/persona', persona ,this.httpOptions);
   }
 
@@ -25,15 +23,15 @@ export class FirebaseService {
     return this.http.get<[any]>('http://52.87.220.184:8080/persona', this.httpOptions);
   }
 
-  aceptarPedido(id: number){
-    return this.http.put<Persona>(`http://52.87.220.184:8080/aceptar/${id}`, this.httpOptions);
+  confirmacionPedido(id: number, estado1: String, track: String){
+    return this.http.put<Persona>(`http://52.87.220.184:8080/estado1/${id}`, { estado1, track } , this.httpOptions);
   }
 
-  cancelarPedido(id: number){
-    return this.http.put<Persona>(`http://52.87.220.184:8080/cancelar/${id}`, this.httpOptions);
+  confirmacionComprobante(id: number, estado2: String){
+    return this.http.put<Persona>(`http://52.87.220.184:8080/estado2/${id}`, { estado2 } , this.httpOptions);
   }
 
-  enviarComprobante(id: number){
-    return this.http.put<Persona>(`http://52.87.220.184:8080/cancelar/${id}`, this.httpOptions);
+  enviarComprobante(id: number, imagen: String){
+    return this.http.put<Persona>(`http://52.87.220.184:8080/enviarComprobante/${id}`, {imagen}, this.httpOptions);
   }
 }

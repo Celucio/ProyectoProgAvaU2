@@ -12,7 +12,7 @@
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto py-4 py-md-0 ms-auto">
                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                  <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
+                  <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
                     href="#">Inicio</a>
                 </li>
                 <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
@@ -23,16 +23,23 @@
                   <a routerLink="/landing" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
                     href="#">Acerca de</a>
                 </li>
-                <div class="bg-light rounded-3 px-4 d-block d-lg-flex">
+                <div class="bg-light rounded-3 px-4 d-block d-lg-flex" *ngIf="sesion.getSession('admin');">
                   <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                     <a routerLink="/confirmacion" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
-                      href="#">Confirmaciones</a>
+                    href="#">Confirmaciones</a>
                   </li>
                   <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                     <a routerLink="/transacciones" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
-                      href="#">Transacciones</a>
+                    href="#">Transacciones</a>
                   </li>
                 </div>
+                <li  *ngIf="!sesion.getSession('admin');" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <a routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link"
+                    href="#">Iniciar Sesión</a>
+                </li>
+                <li  *ngIf="sesion.getSession('admin');" class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                  <a routerLink="/" class="nav-link" (click)="cerrarSesion()">Cerrar Sesión</a>
+                </li>
               </ul>
             </div>
           </div>

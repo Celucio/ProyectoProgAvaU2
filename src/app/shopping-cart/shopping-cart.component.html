@@ -1,0 +1,40 @@
+<div class="card text-center">
+    <div class="card-body">
+        <div class="row col-10 my-4 mx-auto">
+            <div class="text-center fw-bold fs-4">Ganado</div>
+            <div class="row my-4 m-auto">
+                <div class="col-6 form-group">
+                    <label for="productName" class="col-form-label">Lista de animales:</label>
+                </div>
+                <div class="col-6 form-group">
+                    <select [(ngModel)]="animalSeleccionado" (change)="addAnimal()" name="ganado" class="form-control"
+                        id="productName">
+                        <option *ngFor="let animal of ganado" [ngValue]="animal">{{animal.nombre}} {{animal.precio}}$</option>
+                    </select>
+            </div>
+            </div>
+        </div>
+        <div class="card col-11 mx-auto">
+            <div class="card-body gy-5">
+                <div class="row align-items-center gap-4 my-3" *ngFor="let animal of animales">
+                    <label class="col-6">{{ animal.nombre }} - ${{ animal.precio }}</label>
+                    <span class="col-1"> X </span>
+                    <div class="form-group col-2">
+                        <input class="form-control" type="number" [(ngModel)]="animal.cantidad" (change)="calculateTotal()"  min="1">
+                    </div>
+                    <div class="col-1">
+                        <i class="btn material-icons fs-2 text-danger" (click)="removeItem(animal)">cancel</i>
+                        <!-- <button class="btn btn-danger circle-btn"> -->
+                            
+                        <!-- </button> -->
+                    </div>
+                </div>
+                <hr>
+                <div class="p-4 bg-light text-primary fs-3 fw-bold row text-center justify-content-end">
+                    <span class="col-10 text-end">Total: $</span>
+                    <input class="col bg-transparent border-0 col fw-bold text-primary" type="text" readonly id="total_pago" [value]="total">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

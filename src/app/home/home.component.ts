@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   Router,
   CanActivate,
@@ -31,8 +31,6 @@ export class HomeComponent implements OnInit {
 
   ciudades = ["Machala", "Santo Domingo de los Tsáchilas", "Esmeraldas", "Manta", "Portoviejo", "Riobamba", "Latacunga", "Ibarra", "Babahoyo", "Tulcán", "Tena", "Puyo", "Nueva Loja", "Quevedo"]
 
-  ganado = ["Vaca", "Toro", "Caballo", "Cerdo", "Oveja", "Cabra", "Buey", "Burro", "Yegua", "Mula", "Llama", "Chivo"]
-
   newProjectName: any;
   constructor(private formBuilder: FormBuilder, private router: Router, private servicio: FirebaseService) {
     this.buildForm();
@@ -40,6 +38,10 @@ export class HomeComponent implements OnInit {
 
   registerForm!: FormGroup; // No provee una inicialización
 
+  total!: number;
+  handleAttributeChange(attribute: number) {
+    this.total = attribute;
+}
 
   private buildForm() {
     // Enviar todos los campos con sus validaciones
@@ -49,40 +51,59 @@ export class HomeComponent implements OnInit {
       apellido: new FormControl('', [Validators.required]),
       cedula: new FormControl('', [Validators.required, Validators.pattern(/^[1-2][0-9]{9}$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      comentario: new FormControl('', [Validators.minLength(30)]),
+      comentario: new FormControl('', [Validators.minLength(15)]),
       residencia: new FormControl('', [Validators.required]),
     });
   }
 
-
   registrarPedido() {
-    this.persona = new Persona(
-      this.registerForm.value.nombre,
-      this.registerForm.value.apellido,
-      this.registerForm.value.cedula,
-      this.registerForm.value.email,
-      this.registerForm.value.comentario,
-      this.registerForm.value.residencia
-    );
-    this.servicio.registrarPersona(this.persona).subscribe(res => {
-      Swal.fire({
-        title: '¡Se ha registrado el pedido correctamente!',
-        text: 'Su solicitud está siendo procesada, se le enviará una notificación a su correo para continúe con su proceso en el apartado de "Confirmaciones".',
-        icon: 'success',
-        confirmButtonText: 'Continuar'
-      });
-      this.registerForm.reset();
-    },
-      (err) => {
-        console.log(err);
+    if(this.registerForm.valid){
+      if (this.total > 0 ){
+        this.persona = new Persona(
+          this.registerForm.value.nombre,
+          this.registerForm.value.apellido,
+          this.registerForm.value.cedula,
+          this.registerForm.value.email,
+          this.registerForm.value.comentario,
+          this.registerForm.value.residencia,
+          this.total
+        );
+        this.servicio.registrarPersona(this.persona).subscribe(res => {
+          Swal.fire({
+            title: '¡Se ha registrado el pedido correctamente!',
+            text: 'Su solicitud está siendo procesada, se le enviará una notificación a su correo para continúe con el proceso.',
+            icon: 'success',
+            confirmButtonText: 'Continuar'
+          });
+          this.registerForm.reset();
+        },
+          (err) => {
+            console.log(err);
+            Swal.fire({
+              title: '¡Ha ocurrido un error en el proceso!',
+              text: 'Su solicitud no ha sido procesada, intente nuevamente.',
+              icon: 'error',
+              confirmButtonText: 'Continuar'
+            })
+          }
+        );
+      } else {
+        this.registerForm.markAllAsTouched();
         Swal.fire({
-          title: '¡Ha ocurrido un error en el proceso!',
-          text: 'Su solicitud no ha sido procesada, intente nuevamente.',
+          title: '¡Ganado no seleccionado!',
+          text: 'Ingrese como mínimo un animal para comprar.',
           icon: 'error',
           confirmButtonText: 'Continuar'
-        })
+        });
       }
-    );
+    } else {
+      this.registerForm.markAllAsTouched();
+      Swal.fire({
+        title: '¡Complete los campos oblogatorios!',
+        icon: 'error',
+        confirmButtonText: 'Continuar'
+      });
+    }
   }
 
   ngOnInit() {
