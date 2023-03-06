@@ -1,7 +1,7 @@
 <app-template></app-template>
 
 <div id="form" class="container p-4 m-auto my-5 w-75 bg-light rounded-3 border">
-  <form #formExterno="ngForm" [formGroup]="registerForm" class="row gy-2" (ngSubmit)="registrarPedido()">
+  <form #formExterno="ngForm" [formGroup]="registerForm" class="row gy-2" (ngSubmit)="registrarPedido();">
     <div>
       <h3 class="fw-bold">
         Compra de <span class="text-primary">Ganado</span>
@@ -29,7 +29,7 @@
         placeholder="Ingrese su DNI/Cédula" />
       <div class="alert alert-danger p-2 my-2" *ngIf="cedulaCtrol?.errors && cedulaCtrol?.touched">
         <p class="m-auto" *ngIf="cedulaCtrol?.hasError('required')">Es un campo requerido.</p>
-        <p class="m-auto" *ngIf="cedulaCtrol?.hasError('pattern')">No es una cédula ecuatoriana.</p>
+        <p class="m-auto" *ngIf="cedulaCtrol?.hasError('cedulaInvalida')">No es una cédula Ecuatoriana válida.</p>
       </div>
     </div>
     <div class="form-group col-12 col-md-6">
@@ -49,6 +49,7 @@
       </select>
       <div class="alert alert-danger p-2 my-2" *ngIf="residenciaCtrol?.errors && residenciaCtrol?.touched">
         <p class="m-auto" *ngIf="residenciaCtrol?.hasError('required')">Es un campo requerido.</p>
+        <p class="m-auto">Opción no válida.</p>
       </div>
     </div>
     <div class="form-group mb-4">
